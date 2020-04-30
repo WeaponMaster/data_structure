@@ -1,10 +1,13 @@
 # Git配置文件
 git config --global uesr.name "xy0oo0ls"
 git config --global user.email "xy0oo0ls@gmail.com"
-# 远程登录GitHub
+# git远程登录GitHub
 ssh-keygen -t rsa -C "youremail@example.com"
+# github ssh配置
+settings->ssh and GPG keys->new ssh key->git ssh里的id_rsa.pub密钥复制进去
 
-File->Settings->VersionControl->Github->AddAccount->账户名密码
+# pycharm配置
+File->Settings->VersionControl->Github->AddAccount->账户名token
 File->Settings->VersionControl->Git->PathToGitExecutable->git安装路径
 # 第一次分享工程
 VCS->ImportIntoVersionControl->ShareProjectOnGithub->Share
