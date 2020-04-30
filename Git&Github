@@ -5,11 +5,20 @@ git config --global user.email "xy0oo0ls@gmail.com"
 ssh-keygen -t rsa -C "youremail@example.com"
 # github ssh配置
 settings->ssh and GPG keys->new ssh key->git ssh里的id_rsa.pub密钥复制进去
-
+# Git使用
+1.mkdir mygit->cd mygit->git init
+2.在GitHub创建一个同名仓库
+3.git remote add origin(别名) git@github.com:WeaponMaster/mygit.git 链接到远程仓库
+4.git status->创建一个readme.txt,随便输入一些信息查看状态有什么变化
+5.git diff readme.txt->查看readme.txt具体哪里有不同
+6.git add readme.txt->把要提交的文件添加到暂存区,没有任何提示
+7.git status->显示被修改的地方
+8.git commit -m(message) "first commit"->将暂存区中的文件提交到本地仓库中
+9.git push origin master->把本地提交的信息推送到远程
+10.git clone git@github.com:xxx/xxx.git->克隆其他人的项目
 # pycharm配置
 File->Settings->VersionControl->Github->AddAccount->账户名token
 File->Settings->VersionControl->Git->PathToGitExecutable->git安装路径
 # 第一次分享工程
 VCS->ImportIntoVersionControl->ShareProjectOnGithub->Share
-# 下载
 
