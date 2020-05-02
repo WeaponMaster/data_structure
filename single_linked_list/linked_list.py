@@ -1,3 +1,18 @@
+"""
+
+
+Parameters
+----------
+
+Returns
+-------
+
+:Author:  Mr.Zhang
+:Create:  2020/5/2 10:38
+:Github:  https://github.com/WeaponMaster
+Copyright (c) 2020, Mr.Zhang Group All Rights Reserved.
+"""
+
 class Node:  # create a Node
     def __init__(self, data):
         self.data = data  # given data
@@ -21,6 +36,12 @@ class LinkedList:
             temp.next = Node(data)  # create node & link to tail
 
     def insert_head(self, data) -> None:
+        """
+        :param data:
+        :type data:
+        :return:
+        :rtype:
+        """
         new_node = Node(data)  # create a new node
         if self.head:  # 如果有头部结点
             new_node.next = self.head  # link new_node to head
@@ -29,18 +50,27 @@ class LinkedList:
     def insert(self, i, data):
         if self.head is None:
             self.insert_head(data)
-        temp = self.head
-        j = 1
-        pre = None
-        while j < i:
+        elif i == 1:
+            self.insert_head(data)
+        else:
+            temp = self.head
+            j = 1
             pre = temp
-            temp = temp.next
-            j += 1
-        node = Node(data)
-        pre.next = node
-        node.next = temp
+            while j < i:
+                pre = temp
+                temp = temp.next
+                j += 1
+            node = Node(data)
+            pre.next = node
+            node.next = temp
 
-    def llist(self, object):
+    def linklist(self, object)-> None:
+        """
+        :param object:
+        :type object:
+        :return:
+        :rtype:
+        """
         self.head = Node(object[0])
         temp = self.head
         for i in object[1:]:
@@ -130,7 +160,9 @@ class LinkedList:
 
 
 a = LinkedList()
-a.llist([1, 2, 3])
+a.linklist([1, 2, 3])
+a.insert(1,0)
+a.insert(5,4)
 # a.append(2)
 # a.append(3)
 # a.append(5)
