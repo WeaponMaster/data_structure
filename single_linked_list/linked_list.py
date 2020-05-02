@@ -1,17 +1,10 @@
 """
-
-
-Parameters
-----------
-
-Returns
--------
-
 :Author:  Mr.Zhang
-:Create:  2020/5/2 10:38
+:Create:  2020/5/2 17:39
 :Github:  https://github.com/WeaponMaster
 Copyright (c) 2020, Mr.Zhang Group All Rights Reserved.
 """
+
 
 class Node:  # create a Node
     def __init__(self, data):
@@ -36,12 +29,6 @@ class LinkedList:
             temp.next = Node(data)  # create node & link to tail
 
     def insert_head(self, data) -> None:
-        """
-        :param data:
-        :type data:
-        :return:
-        :rtype:
-        """
         new_node = Node(data)  # create a new node
         if self.head:  # 如果有头部结点
             new_node.next = self.head  # link new_node to head

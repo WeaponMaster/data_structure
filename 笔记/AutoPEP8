@@ -1,0 +1,7 @@
+1.pip install autopep8
+2.file->settings->Tools->ExternalTools->+->
+{
+Program:autopep8;
+Parameters:--in-place --aggressive --aggressive $FilePath$
+$ProjectFileDir$
+}
