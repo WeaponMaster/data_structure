@@ -52,12 +52,6 @@ class LinkedList:
             node.next = temp
 
     def linklist(self, object)-> None:
-        """
-        :param object:
-        :type object:
-        :return:
-        :rtype:
-        """
         self.head = Node(object[0])
         temp = self.head
         for i in object[1:]:
@@ -97,9 +91,9 @@ class LinkedList:
         current = self.head
 
         while current:
-            # Store the current node's next node.
+            # 储存当前节点的下一个节点
             next_node = current.next
-            # Make the current node's next point backwards
+            # 当前节点的下一个节点指向前一个节点Make the current node's next point backwards
             current.next = prev
             # Make the previous node be the current node
             prev = current
