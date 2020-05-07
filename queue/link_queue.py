@@ -1,3 +1,10 @@
+"""
+:Author:  Mr.Zhang
+:Create:  2020/5/7 23:15
+:Github:  https://github.com/WeaponMaster
+Copyright (c) 2020, Mr.Zhang Group All Rights Reserved.
+"""
+
 from typing import Any, Optional
 
 
@@ -8,6 +15,7 @@ class Node:
 
     def __repr__(self):  # string representation of a Node
         return f"Node({self.data})"  # 字符串格式化输出
+
 
 class LinkedQueue:
 
