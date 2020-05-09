@@ -1,6 +1,10 @@
 """
-A binary search Tree
+Author:  Mr.Zhang
+Create:  2020/5/9 9:18
+Github:  https://github.com/WeaponMaster
+Copyright (c) 2020, Mr.Zhang Group All Rights Reserved.
 """
+from pprint import pformat
 
 
 class Node:
@@ -11,8 +15,6 @@ class Node:
         self.right = None
 
     def __repr__(self):
-        from pprint import pformat
-
         if self.left is None and self.right is None:
             return str(self.value)
         return pformat({"%s" % (self.value): (self.left, self.right)}, indent=1)
@@ -66,6 +68,7 @@ class BinarySearchTree:
             node = self.root
             while node is not None and node.value is not value:
                 node = node.left if value < node.value else node.right
+            print(node)
             return node
 
     def is_right(self, node):
@@ -92,13 +95,9 @@ class BinarySearchTree:
             elif node.right is None:  # Has only left children
                 self.__reassign_nodes(node, node.left)
             else:
-                tmp_node = self.get_max(
-                    node.left
-                )  # Gets the max value of the left branch
+                tmp_node = self.get_max(node.left)  # Gets the max value of the left branch
                 self.remove(tmp_node.value)
-                node.value = (
-                    tmp_node.value
-                )  # Assigns the value to the node to delete and keep tree structure
+                node.value = tmp_node.value  # Assigns the value to the node to delete and keep tree structure
 
     def get_max(self, node=None):
         if node is None:
@@ -117,36 +116,35 @@ class BinarySearchTree:
                 node = node.left
         return node
 
-    def preorder_traverse(self, node):
+    def preorder(self, node):
+        """self, left, right"""
         if node is not None:
-            yield node  # Preorder Traversal
-            yield from self.preorder_traverse(node.left)
-            yield from self.preorder_traverse(node.right)
+            yield node
+            yield from self.preorder(node.left)
+            yield from self.preorder(node.right)
 
-    def traversal_tree(self, traversal_function=None):
-        """
-        This function traversal the tree.
-        You can pass a function to traversal the tree as needed by client code
-        """
-        if traversal_function is None:
-            return self.preorder_traverse(self.root)
+    def postorder(self, curr_node):
+        """left, right, self"""
+        node_list = list()
+        if curr_node is not None:
+            node_list = self.postorder(curr_node.left) + self.postorder(curr_node.right) + [curr_node]
+        return node_list
+
+    def traversal(self, method=None):
+        """遍历方法,需要指定遍历策略"""
+        if method is None:
+            return self.preorder(self.root)
         else:
-            return traversal_function(self.root)
+            return self.postorder(self.root)
 
 
-def postorder(curr_node):
-    """
-    postOrder (left, right, self)
-    """
-    node_list = list()
-    if curr_node is not None:
-        node_list = postorder(curr_node.left) + postorder(curr_node.right) + [curr_node]
-    return node_list
+t = BinarySearchTree().insert(8, 3, 6, 1, 10, 14, 13, 4, 7)
+print(" ".join(repr(i.value) for i in t.traversal()))
+t.search(6)
+t.remove(13)
+print(" ".join(repr(i.value) for i in t.traversal()))
 
-
-def binary_search_tree():
-    """
-    Example
+"""
                   8
                  / \
                 3   10
@@ -155,45 +153,30 @@ def binary_search_tree():
                  / \   /
                 4   7 13
 
-    >>> t = BinarySearchTree().insert(8, 3, 6, 1, 10, 14, 13, 4, 7)
-    >>> print(" ".join(repr(i.value) for i in t.traversal_tree()))
-    8 3 1 6 4 7 10 14 13
-    >>> print(" ".join(repr(i.value) for i in t.traversal_tree(postorder)))
-    1 4 7 6 3 13 14 10 8
-    >>> BinarySearchTree().search(6)
-    Traceback (most recent call last):
-    ...
-    IndexError: Warning: Tree is empty! please use another.
-    """
-    testlist = (8, 3, 6, 1, 10, 14, 13, 4, 7)
-    t = BinarySearchTree()
-    for i in testlist:
-        t.insert(i)
+"""
+# testlist = (8, 3, 6, 1, 10, 14, 13, 4, 7)
+# t = BinarySearchTree()
+# for i in testlist:
+#     t.insert(i)
+# print(t)
+"""
 
-    # Prints all the elements of the list in order traversal
+
+if t.search(6) is not None:
+    print("The value 6 exists")
+else:
+    print("The value 6 doesn't exist")
+
+if t.search(-1) is not None:
+    print("The value -1 exists")
+else:
+    print("The value -1 doesn't exist")
+
+if not t.is_empty():
+    print("Max Value: ", t.get_max().value)
+    print("Min Value: ", t.get_min().value)
+
+for i in testlist:
+    t.remove(i)
     print(t)
-
-    if t.search(6) is not None:
-        print("The value 6 exists")
-    else:
-        print("The value 6 doesn't exist")
-
-    if t.search(-1) is not None:
-        print("The value -1 exists")
-    else:
-        print("The value -1 doesn't exist")
-
-    if not t.is_empty():
-        print("Max Value: ", t.get_max().value)
-        print("Min Value: ", t.get_min().value)
-
-    for i in testlist:
-        t.remove(i)
-        print(t)
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
-    # binary_search_tree()
+"""
