@@ -123,6 +123,13 @@ class BinarySearchTree:
             yield from self.preorder(node.left)
             yield from self.preorder(node.right)
 
+    def inorder(self, node):
+        """left,self,right"""
+        if node is not None:
+            yield from self.inorder(node.left)
+            yield node
+            yield from self.inorder(node.right)
+
     def postorder(self, curr_node):
         """left, right, self"""
         node_list = list()
@@ -132,17 +139,21 @@ class BinarySearchTree:
 
     def traversal(self, method=None):
         """遍历方法,需要指定遍历策略"""
-        if method is None:
+        if method == 'pre':
             return self.preorder(self.root)
-        else:
+        elif method == 'post':
             return self.postorder(self.root)
+        else:
+            return self.inorder(self.root)
 
 
 t = BinarySearchTree().insert(8, 3, 6, 1, 10, 14, 13, 4, 7)
-print(" ".join(repr(i.value) for i in t.traversal()))
+print(" ".join(repr(i.value) for i in t.traversal(method='pre')))
+print(" ".join(repr(i.value) for i in t.traversal(method='post')))
+print(" ".join(repr(i.value) for i in t.traversal(method='in')))
 t.search(6)
-t.remove(13)
-print(" ".join(repr(i.value) for i in t.traversal()))
+# t.remove(13)
+# print(" ".join(repr(i.value) for i in t.traversal()))
 
 """
                   8
