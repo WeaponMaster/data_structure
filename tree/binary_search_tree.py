@@ -38,8 +38,8 @@ class BinarySearchTree:
         if self.is_empty():
             self.root = new_node
         else:
-            parent_node = self.root
-            while True:  #
+            parent_node = self.root  # 从根节点开始查找位置
+            while True:  # 循环查找
                 if value < parent_node.value:  # 如果插入值小于父结点的值
                     if parent_node.left is None:  # 如果父节点的左结点是空
                         parent_node.left = new_node  # 把插入值设为左节点
@@ -168,24 +168,4 @@ t.search(6)
 # for i in testlist:
 #     t.insert(i)
 # print(t)
-"""
 
-
-if t.search(6) is not None:
-    print("The value 6 exists")
-else:
-    print("The value 6 doesn't exist")
-
-if t.search(-1) is not None:
-    print("The value -1 exists")
-else:
-    print("The value -1 doesn't exist")
-
-if not t.is_empty():
-    print("Max Value: ", t.get_max().value)
-    print("Min Value: ", t.get_min().value)
-
-for i in testlist:
-    t.remove(i)
-    print(t)
-"""
