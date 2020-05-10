@@ -27,8 +27,6 @@ class BinarySearchTree:
     def __str__(self):
         return str(self.root)
 
-
-
     def is_empty(self):
         if self.root is None: # self.node is None
             return True
@@ -75,7 +73,7 @@ class BinarySearchTree:
         return node == node.parent.right
 
     def __reassign_nodes(self, node, new_children):
-        if new_children is not None:  # reset its kids
+        if new_children is not None:  # 先把当前节点的孩子父结点设为当前节点的父结点->节点上移
             new_children.parent = node.parent
         if node.parent is not None:  # reset its parent
             if self.is_right(node):  # If it is the right children
@@ -88,11 +86,11 @@ class BinarySearchTree:
     def remove(self, value):
         node = self.search(value)  # Look for the node with that label
         if node is not None:
-            if node.left is None and node.right is None:  # If it has no children
-                self.__reassign_nodes(node, None)
-            elif node.left is None:  # Has only right children
-                self.__reassign_nodes(node, node.right)
-            elif node.right is None:  # Has only left children
+            if node.left is None and node.right is None:  # 没有孩子节点的情况
+                self.__reassign_nodes(node, None)  # 交换当前节点和None->当前节点变成空
+            elif node.left is None:  # 只有右侧孩子节点
+                self.__reassign_nodes(node, node.right)  #
+            elif node.right is None:  # 只有左侧孩子节点
                 self.__reassign_nodes(node, node.left)
             else:
                 tmp_node = self.get_max(node.left)  # Gets the max value of the left branch
