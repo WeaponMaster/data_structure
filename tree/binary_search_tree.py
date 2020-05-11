@@ -73,10 +73,10 @@ class BinarySearchTree:
         return node == node.parent.right
 
     def __reassign_nodes(self, node, new_children):
-        if new_children is not None:  # 先把当前节点的孩子父结点设为当前节点的父结点->节点上移
-            new_children.parent = node.parent
-        if node.parent is not None:  # reset its parent
-            if self.is_right(node):  # If it is the right children
+        if new_children is not None:  # 如果当前结点子结点非空
+            new_children.parent = node.parent  # 子结点和当前结点互换位置
+        if node.parent is not None:  # 互换位置之后,如果当前结点有父结点
+            if self.is_right(node):  # 判断当前结点是否为右侧结点
                 node.parent.right = new_children
             else:
                 node.parent.left = new_children
@@ -92,10 +92,10 @@ class BinarySearchTree:
                 self.__reassign_nodes(node, node.right)  #
             elif node.right is None:  # 只有左侧孩子节点
                 self.__reassign_nodes(node, node.left)
-            else:
-                tmp_node = self.get_max(node.left)  # Gets the max value of the left branch
-                self.remove(tmp_node.value)
-                node.value = tmp_node.value  # Assigns the value to the node to delete and keep tree structure
+            else:  # 左右孩子结点都有
+                tmp_node = self.get_max(node.left)  # 找到左子树的最大结点
+                self.remove(tmp_node.value)  # 删除节点
+                node.value = tmp_node.value  # 不改变树结构,只更改当前节点的值
 
     def get_max(self, node=None):
         if node is None:
