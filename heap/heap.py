@@ -1,113 +1,77 @@
-"""用数组实现堆"""
+# encoding = utf-8
 
 
-class Heap(object):
+class heap(object):
+
     def __init__(self):
-        self.h = []
-        self.curr_size = 0
+        """
+        初始化一个空堆，使用数组来在存放堆元素，节省存储
+        """
+        self.data_list = []
 
-    def get_left_child_index(self, i):
-        left_child_index = 2 * i + 1
-        if left_child_index < self.curr_size:
-            return left_child_index
-        return None
+    def get_parent_index(self, index):
+        """
+        返回父节点的下标
+        """
+        if index == 0 or index > len(self.data_list) - 1:
+            return None
+        else:
+            return (index - 1) >> 1
 
-    def get_right_child(self, i):
-        right_child_index = 2 * i + 2
-        if right_child_index < self.curr_size:
-            return right_child_index
-        return None
-
-    def max_heapify(self, index):
-        if index < self.curr_size:
-            largest = index
-            lc = self.get_left_child_index(index)
-            rc = self.get_right_child(index)
-            if lc is not None and self.h[lc] > self.h[largest]:
-                largest = lc
-            if rc is not None and self.h[rc] > self.h[largest]:
-                largest = rc
-            if largest != index:
-                self.h[largest], self.h[index] = self.h[index], self.h[largest]
-                self.max_heapify(largest)
-
-    def build_heap(self, collection):
-        self.curr_size = len(collection)
-        self.h = list(collection)
-        if self.curr_size <= 1:
-            return
-        for i in range(self.curr_size // 2 - 1, -1, -1):
-            self.max_heapify(i)
-
-    def get_max(self):
-        if self.curr_size >= 2:
-            me = self.h[0]
-            self.h[0] = self.h.pop(-1)
-            self.curr_size -= 1
-            self.max_heapify(0)
-            return me
-        elif self.curr_size == 1:
-            self.curr_size -= 1
-            return self.h.pop(-1)
-        return None
-
-    def heap_sort(self):
-        size = self.curr_size
-        for j in range(size - 1, 0, -1):
-            self.h[0], self.h[j] = self.h[j], self.h[0]
-            self.curr_size -= 1
-            self.max_heapify(0)
-        self.curr_size = size
+    def swap(self, index_a, index_b):
+        """
+        交换数组中的两个元素
+        """
+        self.data_list[index_a], self.data_list[index_b] = self.data_list[index_b], self.data_list[index_a]
 
     def insert(self, data):
-        self.h.append(data)
-        curr = (self.curr_size - 1) // 2
-        self.curr_size += 1
-        while curr >= 0:
-            self.max_heapify(curr)
-            curr = (curr - 1) // 2
+        """
+        先把元素放在最后，然后从后往前依次堆化
+        这里以大顶堆为例，如果插入元素比父节点大，则交换，直到最后
+        """
+        self.data_list.append(data)
+        index = len(self.data_list) - 1
+        parent = self.get_parent_index(index)
+        # 循环，直到该元素成为堆顶，或小于父节点（对于大顶堆)
+        while parent is not None and self.data_list[parent] < self.data_list[index]:
+            # 交换操作
+            self.swap(parent, index)
+            index = parent
+            parent = self.get_parent_index(parent)
 
-    def display(self):
-        print(self.h)
+    def pop(self):
+        """
+        删除堆顶元素，然后将最后一个元素放在堆顶，再从上往下依次堆化
+        """
+        remove_data = self.data_list[0]
+        self.data_list[0] = self.data_list[-1]
+        del self.data_list[-1]
 
+        # 堆化
+        self.heapify(0)
+        return remove_data
 
-def main():
-    for unsorted in [
-        [],
-        [0],
-        [2],
-        [3, 5],
-        [5, 3],
-        [5, 5],
-        [0, 0, 0, 0],
-        [1, 1, 1, 1],
-        [2, 2, 3, 5],
-        [0, 2, 2, 3, 5],
-        [2, 5, 3, 0, 2, 3, 0, 3],
-        [6, 1, 2, 7, 9, 3, 4, 5, 10, 8],
-        [103, 9, 1, 7, 11, 15, 25, 201, 209, 107, 5],
-        [-45, -2, -5],
-    ]:
-        print("source unsorted list: %s" % unsorted)
-
-        h = Heap()
-        h.build_heap(unsorted)
-        print("after build heap: ", end=" ")
-        h.display()
-
-        print("max value: %s" % h.get_max())
-        print("delete max value: ", end=" ")
-        h.display()
-
-        h.insert(100)
-        print("after insert new value 100: ", end=" ")
-        h.display()
-
-        h.heap_sort()
-        print("heap sort: ", end=" ")
-        h.display()
-        print()
+    def heapify(self, index):
+        """
+        从上往下堆化，从index 开始堆化操作 (大顶堆)
+        """
+        total_index = len(self.data_list) - 1
+        while True:
+            maxvalue_index = index
+            if 2 * index + 1 <= total_index and self.data_list[2 * index + 1] > self.data_list[maxvalue_index]:
+                maxvalue_index = 2 * index + 1  # 如果左孩子结点大于当前最大节点,最大值索引等于左孩子索引
+            if 2 * index + 2 <= total_index and self.data_list[2 * index + 2] > self.data_list[maxvalue_index]:
+                maxvalue_index = 2 * index + 2  # 如果右孩子结点大于当前最大结点,最大值索引等于右孩子结点
+            if maxvalue_index == index:
+                break
+            self.swap(index, maxvalue_index)  # 交换最大值和和当前值
+            index = maxvalue_index  # 当前值等于这一轮的最大值结点
 
 
 if __name__ == "__main__":
-    main()
+    myheap = heap()
+    for i in range(10):
+        myheap.insert(i + 1)
+    print('建堆:', myheap.data_list)
+
+    print("删除堆顶元素：", [myheap.pop() for _ in range(10)])
