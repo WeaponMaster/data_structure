@@ -27,6 +27,7 @@ LeetCode 80 - 删除排序数组中的重复项
 """
 from typing import List
 
+
 class Solution:
     def removeDuplicated(self,nums: List[int])->int:
         count = 1

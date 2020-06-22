@@ -8,26 +8,29 @@ leetcode第026题数组去重(删除排序数组中的重复项)
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array
 """
-
+# [1,1,2,2,3,4] [1,2,3,4,1,2]
+# [1,1,2,2,3,4]->[1,2,2,3,4,1]->
 # 方案一
 from typing import List
+
+
 class Solution:
     def removeDuplicated(self,nums: List[int]) -> int:
         n = len(set(nums))
         i = 0
-        while i < n-1:
+        while i < n-1: # i小于3
             if nums[i] == nums[i+1]:
                 temp = nums[i+1]
-                nums[i+1:len(nums)-1] = nums[i+2:]
+                nums[i+1:len(nums)-1] = nums[i+2:]  # nums[1:5]
                 nums[-1] = temp
                 continue
             else:
                 i += 1
         return i+1
 
-# 方案二
+# 方案二 ,双指针, 快慢指针
 class Solution1:
-    def removeDuplicated(self,nums: List[int]) -> int:
+    def removeDuplicated(self, nums: List[int]) -> int:
         slow = 0
         fast = 1
         while fast < len(nums):
@@ -37,4 +40,4 @@ class Solution1:
                 slow += 1
                 nums[slow] = nums[fast]
                 fast += 1
-        return slow+1
+        return slow + 1
