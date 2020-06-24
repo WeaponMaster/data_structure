@@ -23,32 +23,33 @@
 """
 from typing import List
 
-# def two_sum(nums: List[int], target: int):
-#     for i in range(len(nums)):
-#         for j in nums[i+1:]:
-#             if nums[i]+j == target:
-#                 return True
-#     return False
-#
-# l = [1,2,4,7,11,15]
-# print(two_sum(l,15))
-#
-# # [1,  2, 4,7,11,15]
-# # [14,13,11,8, 4, 0]
-def twoSum(nums, target):
-    nums_dict = {}    # 字典存放(差值:下标)
+def two_sum(nums: List[int], target: int):
     for i in range(len(nums)):
-        temp = target - nums[i]
-        if temp in nums_dict:
-            return [i, nums_dict[temp]]
-        else:
-            nums_dict[nums[i]] = i
+        for j in nums[i+1:]:
+            if nums[i]+j == target:
+                return True
+    return False
 
 l = [1,2,4,7,11,15]
-print(twoSum(l,15))
+print(two_sum(l,15))
+
+# [1,  2, 4,7,11,15]
+# [14,13,11,8, 4, 0]
+
+# def twoSum(nums, target):
+#     nums_dict = {}    # 字典存放(数值:下标)
+#     for i in range(len(nums)):
+#         temp = target - nums[i]  # temp存放差值
+#         if temp in nums_dict:
+#             return [i, nums_dict[temp]]
+#         else:
+#             nums_dict[nums[i]] = i
+#
+# l = [1,2,4,7,11,15]
+# print(twoSum(l,15))
 
 # def twosum(nums,target):
-#     # nums.sort()
+#     nums.sort()
 #
 #     begin = 0
 #     end = len(nums)-1
@@ -58,13 +59,13 @@ print(twoSum(l,15))
 #             print(nums[begin],nums[end])
 #             begin += 1
 #             end -= 1
-#             break
+#             # break
 #         else:
 #             if curr < target:
 #                 begin += 1
 #             else:
 #                 end -= 1
-
-
-# l = [1,2,4,7,11,15]
+#
+#
+# l = [1,2,4,7,11,13,15]
 # twosum(l,15)
