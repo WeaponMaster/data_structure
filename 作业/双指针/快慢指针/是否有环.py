@@ -8,15 +8,15 @@ def is_circle(head):
     curr = head
     prev = head
     while curr and curr.next:
-        prev = prev.next
         curr = curr.next.next
+        prev = prev.next
         if prev == curr:
             return True
     return False
 
 
 if __name__ == '__main__':
-    node1= Node(1)
+    node1 = Node(1)
     node2 = Node(2)
     node3 = Node(3)
     node4 = Node(4)
@@ -29,5 +29,5 @@ if __name__ == '__main__':
     node4.next = node5
     node5.next = node6
     node6.next = node7
-    node7.next = node4
+    node7.next = node1
     print(is_circle(node1))

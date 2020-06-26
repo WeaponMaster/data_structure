@@ -29,7 +29,7 @@ from typing import List
 
 
 class Solution:
-    def removeDuplicated(self,nums: List[int])->int:
+    def removeDuplicated(self, nums: List[int]) -> int:
         count = 1
         slow = 0
         fast = 1
